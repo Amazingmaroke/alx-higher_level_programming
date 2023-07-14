@@ -1,10 +1,8 @@
 #!/usr/bin/node
 
-// script to print strings using a loop
+const stringArr = ['C is fun', 'Python is cool', 'JavaScript is amazing'];
 
-let i;
-const myString = ['C is fun', 'Python is cool', 'JavaScript is amazing'];
-
-for (i = 0; i < 3; i++) {
-  console.log(myString[i]);
+// eslint-disable-next-line no-plusplus
+for (let i = 0; i < stringArr.length; i++) {
+  console.log(stringArr[i]);
 }

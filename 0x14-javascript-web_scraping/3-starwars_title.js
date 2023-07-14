@@ -1,9 +1,23 @@
 #!/usr/bin/node
+const request = require('request');
 
-const r = require('request');
-const url = 'https://swapi-api.hbtn.io/api/films/' + process.argv[2];
+function movieTitle (movieId) {
+  const url = `https://swapi-api.alx-tools.com/api/films/${movieId}`;
+  request.get(url, (error, response, body) => {
+    if (error) {
+      console.log(error);
+    } else {
+      const movie = JSON.parse(body);
+      console.log(movie.title);
+    }
+  });
+}
 
-r.get(url, (err, res, body) => {
-  if (err) console.log(err);
-  else console.log(JSON.parse(body).title);
-});
+const args = process.argv.slice(2);
+
+if (args.length < 1) {
+  console.log('No id passed');
+} else {
+  const movieId = args[0];
+  movieTitle(movieId);
+}

@@ -1,8 +1,21 @@
 #!/usr/bin/node
+const request = require('request');
 
-const r = require('request');
+function statusCode (url) {
+  request.get(url, (error, response) => {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log(`code: ${response.statusCode}`);
+    }
+  });
+}
 
-r.get(process.argv[2], (err, res) => {
-  if (err) console.log(err);
-  else console.log('code: ' + res.statusCode);
-});
+const args = process.argv.slice(2);
+
+if (args.length < 1) {
+  console.log('No url passed!');
+} else {
+  const url = args[0];
+  statusCode(url);
+}

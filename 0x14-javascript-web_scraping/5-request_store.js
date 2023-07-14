@@ -1,13 +1,24 @@
 #!/usr/bin/node
-
-const r = require('request');
+const request = require('request');
 const fs = require('fs');
+const args = process.argv.slice(2);
 
-r.get(process.argv[2], (err, res, body) => {
-  if (err) console.log(err);
-  else {
-    fs.writeFile(process.argv[3], body, 'utf8', (err) => {
-      if (err) console.log(err);
-    });
-  }
-});
+function scrapeWebPageToFile (url, fileName) {
+  request.get(url, function (error, response, body) {
+    if (error) {
+      console.log(error);
+    } else {
+      fs.writeFile(fileName, body, 'utf8', function (err) {
+        if (err) {
+          console.log(err);
+        }
+      });
+    }
+  });
+}
+
+if (args.length === 2) {
+  const url = args[0];
+  const fileName = args[1];
+  scrapeWebPageToFile(url, fileName);
+}

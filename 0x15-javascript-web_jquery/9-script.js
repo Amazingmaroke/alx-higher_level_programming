@@ -1,15 +1,11 @@
+/* Fetch data from hello and display inside div#hello */
 $(document).ready(function () {
-  const salutUri = 'https://fourtonfish.com/hellosalut/?lang=fr';
-  const $helloElement = $('div#hello');
-
-  function getSalut () {
-    return $.get({
-      url: salutUri,
-      dataType: 'json'
-    });
-  }
-
-  getSalut().then((res) => {
-    $helloElement.text(res.hello);
+  $.ajax({
+    url: "https://fourtonfish.com/hellosalut/?lang=fr",
+    type: "GET",
+    dataType: "json",
+    success: function (data) {
+      $("DIV#hello").text(data.hello);
+    },
   });
 });

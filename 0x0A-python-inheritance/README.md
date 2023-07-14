@@ -1,1 +1,2 @@
-# Solution to tasks on Python - Inheritance
+## Python Inheritance
+

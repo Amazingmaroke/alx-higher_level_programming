@@ -1,12 +1,14 @@
 #!/usr/bin/python3
-def best_score(a_dictionary):
-    m = 0
-    score = ""
-    if a_dictionary:
-        for i, j in a_dictionary.items():
-            if j > m:
-                score = i
-                m = j
-        return score
+def best_score(my_dict):
+    """ get the max value in a dict
+
+    Args:
+        my_dict (list): list parsed
+
+    Returns:
+        str: the key with max val or none
+    """
+    if my_dict:
+        return max(my_dict, key=my_dict.get)
     else:
         return None

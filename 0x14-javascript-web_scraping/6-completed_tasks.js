@@ -1,18 +1,32 @@
 #!/usr/bin/node
 
-const r = require('request');
+const request = require('request');
+const args = process.argv.slice(2);
 
-r.get(process.argv[2], (err, res, body) => {
-  if (err) console.log(err);
-  else {
-    const computed = {};
-    const todos = JSON.parse(body);
-    todos.forEach(task => {
-      if (task.completed) {
-        if (!computed[task.userId]) computed[task.userId] = 1;
-        else computed[task.userId] += 1;
+function userTaskCompleted (apiUrl) {
+  request.get(apiUrl, function (error, response, body) {
+    if (error) {
+      console.log(error);
+    } else {
+      const json = JSON.parse(body);
+      const completed = {};
+      for (const task of json) {
+        if (task.completed === true) {
+          /* if a new key with no value */
+          if (completed[task.userId] === undefined) {
+            completed[task.userId] = 1;
+            /* if key exists incremen the value of key */
+          } else {
+            completed[task.userId]++;
+          }
+        }
       }
-    });
-    console.log(computed);
-  }
-});
+      console.log(completed);
+    }
+  });
+}
+
+if (args.length === 1) {
+  const apiUrl = args[0];
+  userTaskCompleted(apiUrl);
+}

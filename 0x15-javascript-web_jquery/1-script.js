@@ -1,3 +1,2 @@
-const $headerElem = $('header');
-
-$headerElem.css('color', '#FF0000');
+/* WIth JQuery */
+$("header").css("color", "#FF0000");

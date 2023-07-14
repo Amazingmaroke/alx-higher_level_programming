@@ -1,8 +1,6 @@
 #!/usr/bin/python3
-"""
-This script prints all City objects
-from the database `hbtn_0e_14_usa`.
-"""
+"""Script that creates the State “California” with the City “San Francisco”
+    """
 
 from sys import argv
 from relationship_state import Base, State
@@ -10,23 +8,34 @@ from relationship_city import City
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-if __name__ == "__main__":
-    """
-    Access to the database and get the cities
-    from the database.
-    """
 
-    db_uri = 'mysql+mysqldb://{}:{}@localhost:3306/{}'.format(
-        argv[1], argv[2], argv[3])
-    engine = create_engine(db_uri)
+def main():
+    """Main function
+    """
+    # create an engine
+    engine = create_engine('mysql+mysqldb://{}:{}@localhost/{}'
+                           .format(argv[1], argv[2],
+                                   argv[3]), pool_pre_ping=True)
+    # create all tables in the engine. This is equivalent to "Create Table"
     Base.metadata.create_all(engine)
+    # create a configured "Session" class
     Session = sessionmaker(bind=engine)
-
+    # insantiate a Session
     session = Session()
-    cal_state = State(name='California')
-    sfr_city = City(name='San Francisco')
-    cal_state.cities.append(sfr_city)
-
-    session.add(cal_state)
+    # create a new State and City objects
+    state = State(name="California")
+    city = City(name="San Francisco")
+    # append the new City object to the State.cities attribute
+    state.cities.append(city)
+    # add the State object to the session
+    session.add(state)
+    # add the City object to the session
+    session.add(city)
+    # commit the session to the database
     session.commit()
+    # close the session
     session.close()
+
+
+if __name__ == "__main__":
+    main()

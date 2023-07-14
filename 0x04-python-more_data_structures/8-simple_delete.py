@@ -1,6 +1,13 @@
 #!/usr/bin/python3
-def simple_delete(a_dictionary, key=""):
-    if key not in a_dictionary:
-        return a_dictionary
-    del a_dictionary[key]
-    return (a_dictionary)
+def simple_delete(my_dict, key=""):
+    """deletes key value pair from  dict
+
+    Args:
+        my_dict (_type_): parsed dict
+        key (str, optional): dict key arg. Defaults to "".
+
+    Returns:
+        dict: my_dict
+    """
+    my_dict.pop(key, None)
+    return my_dict
